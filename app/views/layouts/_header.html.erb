@@ -1,0 +1,47 @@
+
+
+<nav class="navbar navbar-default" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+         <span class="sr-only">Toggle navigation</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         </button>
+         <%= link_to 'Home Page', page_path('home'), class: "navbar-brand" %>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <ul class="nav navbar-nav">
+            <% if user_signed_in? %>
+            <%= javascript_include_tag :defaults %>
+               <li><%=link_to "Local Article", articles_path, class: "active" %></li>
+               <li><%=link_to "Online Article", online_articles_path, class: "active" %></li>
+               <li><%= link_to 'Reading Lists', reading_lists_path,  class: "active" %></li>
+               <li><%=link_to "Account", edit_user_registration_path %></li>
+               <li><%=link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+               <li><%= link_to 'About', page_path('about') %></li>
+
+            <% else %>
+            <li><%=link_to "Sign Up", new_user_registration_path, class: "active" %></li>
+            <li><%=link_to "Sign In", new_user_session_path, class: "active" %></li>
+            <% end %>
+         </ul>
+         <%= form_tag search_articles_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
+         <p>
+         <%= text_field_tag :search, params[:search], class: "form-control"%>
+         <%= submit_tag "Search", name: nil, class: "btn btn-default" %>  
+
+         <% if user_signed_in? %>   
+            User:
+               <%= current_user.email %> 
+           <% end %>
+         </p>
+         <% end %>
+
+           
+      </div>
+   </div>
+</nav>
+
+
